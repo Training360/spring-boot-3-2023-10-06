@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb
+    expose:
+      - 3306
+    environment:
+      MARIADB_DATABASE: employees
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+      MARIADB_USER: employees
+      MARIADB_PASSWORD: employees
+    healthcheck:
+      test: [ "CMD-SHELL", 'healthcheck.sh --su-mysql --connect --innodb_initialized' ]
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+  employees-app:
+    image: employees-sb3:0.0.1-SNAPSHOT
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    expose:
+      - 8080
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mariadb://mariadb:3306/employees'
+      SPRING_DATASOURCE_USERNAME: employees
+      SPRING_DATASOURCE_PASSWORD: employees
+    ports:
+      - 8080:8080
