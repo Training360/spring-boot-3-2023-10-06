@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_DATABASE: employees
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+      MARIADB_USER: employees
+      MARIADB_PASSWORD: employees
+    ports:
+      - '3306:3306'

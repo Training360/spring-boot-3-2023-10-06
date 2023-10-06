@@ -14,4 +14,8 @@ public class EmployeeResource {
 
     @NotBlank
     private String name;
+
+    public EmployeeResource(String name) {
+        this.name = name;
+    }
 }

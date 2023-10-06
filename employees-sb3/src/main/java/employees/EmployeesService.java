@@ -1,6 +1,7 @@
 package employees;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,11 +9,14 @@ import java.util.function.Supplier;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class EmployeesService {
 
     private EmployeesRepository repository;
 
     public List<EmployeeResource> listEmployees() {
+        log.info("List employees 2");
+
         return repository.findAllResources();
     }
 
