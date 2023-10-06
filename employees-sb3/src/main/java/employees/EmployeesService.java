@@ -1,5 +1,8 @@
 package employees;
 
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.observation.annotation.Observed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,8 +17,18 @@ public class EmployeesService {
 
     private EmployeesRepository repository;
 
+//    private ObservationRegistry observationRegistry;
+
+    @Observed(name = "list.employees", contextualName = "list.employees", lowCardinalityKeyValues = {"framework", "spring"})
     public List<EmployeeResource> listEmployees() {
         log.info("List employees 2");
+
+//        return Observation.createNotStarted("controller.hello", observationRegistry)
+//                .lowCardinalityKeyValue("framework", "spring")
+//                .observe(() -> {
+//                    return repository.findAllResources();
+//                });
+
 
         return repository.findAllResources();
     }
